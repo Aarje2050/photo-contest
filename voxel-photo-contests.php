@@ -113,8 +113,10 @@ final class Voxel_Photo_Contests {
      * Plugin activation.
      */
     public function activate() {
-        // Create database tables
-        \Voxel_Photo_Contests\Database::create_tables();
+        // Make sure Database class is loaded
+require_once VOXEL_PHOTOS_PLUGIN_DIR . 'includes/database.php';
+// Create database tables
+\Voxel_Photo_Contests\Database::create_tables();
 
         // Flush rewrite rules after registering custom post types
         flush_rewrite_rules();

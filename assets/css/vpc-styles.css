@@ -56,3 +56,15 @@
     color: #6c757d;
     margin-top: 5px;
 }
+
+.vpc-votes-left,
+.vpc-votes-limit-reached {
+    font-size: 12px;
+    color: #6c757d;
+    margin-top: 5px;
+    font-style: italic;
+}
+
+.vpc-votes-limit-reached {
+    color: #dc3545;
+}

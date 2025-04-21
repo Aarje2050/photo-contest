@@ -1,0 +1,514 @@
+/* Photo Contest Styles */
+
+/* Common */
+.voxel-alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.voxel-alert-info {
+    background-color: #e7f5ff;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+.voxel-alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+.voxel-alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.voxel-alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Contest Feed */
+.voxel-photo-feed {
+    display: grid;
+    grid-gap: 20px;
+}
+
+.voxel-photo-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.voxel-grid-1 {
+    grid-template-columns: 1fr;
+}
+
+.voxel-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.voxel-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.voxel-grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.voxel-grid-5 {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.voxel-photo-masonry {
+    column-count: 3;
+    column-gap: 20px;
+}
+
+.voxel-masonry-1 {
+    column-count: 1;
+}
+
+.voxel-masonry-2 {
+    column-count: 2;
+}
+
+.voxel-masonry-3 {
+    column-count: 3;
+}
+
+.voxel-masonry-4 {
+    column-count: 4;
+}
+
+.voxel-masonry-5 {
+    column-count: 5;
+}
+
+.voxel-photo-masonry .voxel-photo-item {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.voxel-photo-item {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.voxel-photo-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.voxel-photo-image {
+    position: relative;
+    padding-bottom: 75%; /* 4:3 Aspect Ratio */
+    overflow: hidden;
+}
+
+.voxel-photo-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.voxel-photo-item:hover .voxel-photo-image img {
+    transform: scale(1.05);
+}
+
+.voxel-photo-content {
+    padding: 15px;
+}
+
+.voxel-photo-title {
+    margin: 0 0 10px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.voxel-photo-title a {
+    text-decoration: none;
+    color: #333;
+}
+
+.voxel-photo-author {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+/* Vote Button */
+.voxel-photo-voting {
+    margin-top: 15px;
+}
+
+.voxel-vote-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background-color: #f8f9fa;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.voxel-vote-button:hover {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.voxel-vote-button.voted {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.voxel-vote-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.voxel-vote-icon, .voxel-vote-icon-voted {
+    font-size: 18px;
+}
+
+.voxel-vote-count {
+    margin-left: 5px;
+    font-weight: 600;
+}
+
+.voxel-login-prompt {
+    margin-top: 10px;
+    font-size: 13px;
+    text-align: center;
+}
+
+.voxel-login-prompt a {
+    color: #0d6efd;
+    text-decoration: none;
+}
+
+/* Leaderboard */
+.voxel-leaderboard {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.voxel-leaderboard-item {
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.voxel-leaderboard-rank {
+    font-size: 18px;
+    font-weight: 700;
+    color: #555;
+    min-width: 50px;
+    text-align: center;
+}
+
+.voxel-leaderboard-thumbnail {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-right: 15px;
+}
+
+.voxel-leaderboard-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.voxel-leaderboard-info {
+    flex: 1;
+}
+
+.voxel-leaderboard-title {
+    margin: 0 0 5px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.voxel-leaderboard-title a {
+    color: #333;
+    text-decoration: none;
+}
+
+.voxel-leaderboard-author {
+    font-size: 14px;
+    color: #666;
+}
+
+.voxel-leaderboard-votes {
+    font-size: 14px;
+    font-weight: 600;
+    color: #dc3545;
+    margin-left: 15px;
+    white-space: nowrap;
+}
+
+/* Submission Form */
+.voxel-submission-form {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.voxel-submission-title {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 24px;
+    color: #333;
+}
+
+.voxel-submission-description {
+    margin-bottom: 25px;
+    color: #666;
+}
+
+.voxel-form-field {
+    margin-bottom: 20px;
+}
+
+.voxel-form-field label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #333;
+}
+
+.voxel-form-field .required {
+    color: #dc3545;
+}
+
+.voxel-form-field input[type="text"],
+.voxel-form-field input[type="email"],
+.voxel-form-field select,
+.voxel-form-field textarea {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+    transition: border-color 0.2s ease;
+}
+
+.voxel-form-field input[type="text"]:focus,
+.voxel-form-field input[type="email"]:focus,
+.voxel-form-field select:focus,
+.voxel-form-field textarea:focus {
+    border-color: #0d6efd;
+    outline: none;
+}
+
+.voxel-form-field .field-description {
+    margin-top: 5px;
+    font-size: 13px;
+    color: #666;
+}
+
+.voxel-form-actions {
+    margin-top: 30px;
+}
+
+.voxel-submit-button {
+    background-color: #0d6efd;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.voxel-submit-button:hover {
+    background-color: #0b5ed7;
+}
+
+.voxel-submit-button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+/* Contest header & footer */
+.voxel-contest-header,
+.voxel-contest-footer {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.voxel-contest-status {
+    margin-bottom: 15px;
+}
+
+.voxel-status-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.voxel-status-upcoming {
+    background-color: #cff4fc;
+    color: #055160;
+}
+
+.voxel-status-active {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.voxel-status-ended {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+.voxel-contest-dates p {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #333;
+}
+
+.voxel-contest-actions {
+    margin-top: 20px;
+}
+
+.voxel-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.voxel-btn-primary {
+    background-color: #0d6efd;
+    color: #fff;
+    border: 1px solid #0d6efd;
+}
+
+.voxel-btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+.voxel-contest-rules,
+.voxel-contest-prizes {
+    margin-bottom: 30px;
+}
+
+.voxel-contest-rules h3,
+.voxel-contest-prizes h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Star Rating */
+.voxel-star-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.voxel-star {
+    font-size: 24px;
+    color: #e2e2e2;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.voxel-star:hover,
+.voxel-star.voted {
+    color: #ffc107;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .voxel-photo-grid,
+    .voxel-grid-4,
+    .voxel-grid-5 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .voxel-photo-masonry,
+    .voxel-masonry-4,
+    .voxel-masonry-5 {
+        column-count: 3;
+    }
+}
+
+@media (max-width: 767px) {
+    .voxel-photo-grid,
+    .voxel-grid-3,
+    .voxel-grid-4,
+    .voxel-grid-5 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .voxel-photo-masonry,
+    .voxel-masonry-3,
+    .voxel-masonry-4,
+    .voxel-masonry-5 {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 576px) {
+    .voxel-photo-grid,
+    .voxel-grid-2,
+    .voxel-grid-3,
+    .voxel-grid-4,
+    .voxel-grid-5 {
+        grid-template-columns: 1fr;
+    }
+    
+    .voxel-photo-masonry,
+    .voxel-masonry-2,
+    .voxel-masonry-3,
+    .voxel-masonry-4,
+    .voxel-masonry-5 {
+        column-count: 1;
+    }
+    
+    .voxel-leaderboard-item {
+        flex-wrap: wrap;
+    }
+    
+    .voxel-leaderboard-votes {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+}

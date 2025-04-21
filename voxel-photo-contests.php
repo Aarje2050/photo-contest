@@ -60,16 +60,21 @@ final class Voxel_Photo_Contests {
      */
     private function includes() {
         // Check if Voxel theme is active
-        if (!class_exists('\\Voxel\\')) {
-            add_action('admin_notices', function() {
-                ?>
-                <div class="notice notice-error">
-                    <p><?php esc_html_e('Voxel Photo Contests requires the Voxel theme to be installed and activated.', 'voxel-photo-contests'); ?></p>
-                </div>
-                <?php
-            });
-            return;
-        }
+if (!class_exists('\\Voxel\\')) {
+    // Add a notice but don't prevent plugin from loading
+    add_action('admin_notices', function() {
+        ?>
+        <div class="notice notice-warning is-dismissible">
+            <p><?php esc_html_e('Voxel theme is not detected. Some Voxel-specific features may be limited.', 'voxel-photo-contests'); ?></p>
+        </div>
+        <?php
+    });
+    
+    // Define a minimal Voxel Post_Type class if it doesn't exist
+    if (!class_exists('\\Voxel\\Post_Type')) {
+        require_once VOXEL_PHOTOS_PLUGIN_DIR . 'includes/compatibility/post-type.php';
+    }
+}
 
         // Include core files
         require_once VOXEL_PHOTOS_PLUGIN_DIR . 'includes/database.php';

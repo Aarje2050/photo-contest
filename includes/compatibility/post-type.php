@@ -31,11 +31,25 @@ class Post_Type {
     }
 }
 
-// Minimal Widgets\Base_Widget class for compatibility
-if (!class_exists('\\Voxel\\Widgets\\Base_Widget')) {
-    namespace Voxel\Widgets;
+// Define Base_Widget in its own namespace
+namespace Voxel\Widgets;
+
+// Minimal Base_Widget class for compatibility
+class Base_Widget extends \Elementor\Widget_Base {
+    // Basic implementation
+    public function get_name() {
+        return 'base-widget';
+    }
     
-    class Base_Widget extends \Elementor\Widget_Base {
-        // Basic implementation
+    public function get_title() {
+        return 'Base Widget';
+    }
+    
+    public function get_icon() {
+        return 'eicon-code';
+    }
+    
+    public function get_categories() {
+        return ['general'];
     }
 }

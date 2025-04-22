@@ -10,6 +10,7 @@ if (!defined('ABSPATH')) {
  * 
  * Handles templates for displaying contests and submissions
  */
+if (!class_exists('VPC\Contest_Templates')) {
 class Contest_Templates {
 
     
@@ -311,4 +312,5 @@ class Contest_Templates {
         include $template_file;
         return ob_get_clean();
     }
+}
 }

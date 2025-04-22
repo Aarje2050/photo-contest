@@ -10,6 +10,7 @@ if (!defined('ABSPATH')) {
  * 
  * Handles integration with Voxel's submission post type
  */
+if (!class_exists('VPC\Submission_Integration')) {
 class Submission_Integration {
     
     private static $instance = null;
@@ -356,4 +357,5 @@ class Submission_Integration {
         
         return $query;
     }
+}
 }

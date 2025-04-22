@@ -10,6 +10,7 @@ if (!defined('ABSPATH')) {
  * 
  * Handles integration with Voxel's contest post type
  */
+if (!class_exists('VPC\Contest_Integration')) {
 class Contest_Integration {
     
     private static $instance = null;
@@ -277,4 +278,5 @@ class Contest_Integration {
         
         return $query->posts;
     }
+}
 }

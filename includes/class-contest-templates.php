@@ -11,6 +11,7 @@ if (!defined('ABSPATH')) {
  * Handles templates for displaying contests and submissions
  */
 class Contest_Templates {
+
     
     private static $instance = null;
     
@@ -310,3 +311,4 @@ class Contest_Templates {
         include $template_file;
         return ob_get_clean();
     }
+}

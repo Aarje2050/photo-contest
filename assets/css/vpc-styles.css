@@ -1,50 +1,257 @@
-/* Vote Button Styles */
+/**
+ * Voxel Photo Contests
+ * Main stylesheet
+ */
+
+/* General Styles */
+.vpc-container {
+    --main-bg-color: var(--ts-container-bg, #fff);
+    --main-border-color: var(--ts-container-border, #eee);
+    --main-text-color: var(--ts-main-text, #242629);
+    --secondary-text-color: var(--ts-faded-text, #757679);
+    --accent-color: var(--ts-accent-color, #0d66d0);
+    --accent-hover-color: var(--ts-accent-hover-color, #0a4fa3);
+    --primary-btn-color: var(--ts-accent-color, #0d66d0);
+    --primary-btn-text-color: var(--ts-accent-text, #fff);
+    --secondary-btn-color: var(--ts-primary-light, #f7f7f7);
+    --secondary-btn-text-color: var(--ts-main-text, #242629);
+    --btn-radius: var(--ts-border-radius-sm, 5px);
+    --card-radius: var(--ts-border-radius-md, 8px);
+    --gallery-gap: var(--ts-container-padding, 20px);
+    --card-shadow: var(--ts-container-shadow, 0 3px 6px rgba(0, 0, 0, 0.06));
+    
+    margin-bottom: 30px;
+}
+
+.vpc-error {
+    color: #dc3545;
+    background-color: #f8d7da;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.vpc-notice {
+    color: #856404;
+    background-color: #fff3cd;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.vpc-success {
+    color: #155724;
+    background-color: #d4edda;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.vpc-login-required {
+    background-color: var(--secondary-btn-color);
+    color: var(--secondary-btn-text-color);
+    padding: 15px;
+    border-radius: var(--card-radius);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.vpc-login-required a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.vpc-login-required a:hover {
+    text-decoration: underline;
+}
+
+/* Contest Header */
+.vpc-contest-header {
+    margin-bottom: 30px;
+}
+
+.vpc-contest-header h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: var(--main-text-color);
+}
+
+.vpc-contest-header .vpc-contest-dates {
+    font-size: 14px;
+    color: var(--secondary-text-color);
+    margin-bottom: 15px;
+}
+
+.vpc-contest-header .vpc-contest-status {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 14px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+}
+
+.vpc-contest-header .vpc-contest-status.vpc-status-active {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.vpc-contest-header .vpc-contest-status.vpc-status-upcoming {
+    background-color: #cfe2ff;
+    color: #084298;
+}
+
+.vpc-contest-header .vpc-contest-status.vpc-status-ended {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+.vpc-contest-description {
+    margin-bottom: 30px;
+    color: var(--main-text-color);
+}
+
+.vpc-contest-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.vpc-contest-stat {
+    flex: 1;
+    min-width: 140px;
+    padding: 15px;
+    background-color: var(--main-bg-color);
+    border: 1px solid var(--main-border-color);
+    border-radius: var(--card-radius);
+    text-align: center;
+    box-shadow: var(--card-shadow);
+}
+
+.vpc-contest-stat .vpc-stat-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-bottom: 5px;
+}
+
+.vpc-contest-stat .vpc-stat-label {
+    font-size: 14px;
+    color: var(--secondary-text-color);
+}
+
+/* Submission Gallery */
+.vpc-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--gallery-gap);
+    margin-bottom: 30px;
+}
+
+.vpc-submission-card {
+    background-color: var(--main-bg-color);
+    border: 1px solid var(--main-border-color);
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vpc-submission-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.vpc-submission-image {
+    position: relative;
+    aspect-ratio: 3/2;
+    overflow: hidden;
+}
+
+.vpc-submission-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.vpc-submission-card:hover .vpc-submission-image img {
+    transform: scale(1.05);
+}
+
+.vpc-submission-content {
+    padding: 15px;
+}
+
+.vpc-submission-title {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--main-text-color);
+}
+
+.vpc-submission-author {
+    font-size: 14px;
+    color: var(--secondary-text-color);
+    margin-bottom: 10px;
+}
+
+.vpc-submission-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+/* Vote Button */
 .vpc-vote-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     margin: 15px 0;
 }
 
 .vpc-vote-count {
     font-size: 14px;
-    color: #555;
-    margin-bottom: 5px;
+    color: var(--secondary-text-color);
+    margin-bottom: 8px;
 }
 
 .vpc-vote-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: #f8f9fa;
-    color: #dc3545;
-    border: 1px solid #dc3545;
-    border-radius: 20px;
-    padding: 5px 15px;
+    background-color: var(--primary-btn-color);
+    color: var(--primary-btn-text-color);
+    border: none;
+    border-radius: var(--btn-radius);
+    padding: 8px 16px;
     font-size: 14px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background-color 0.2s ease;
 }
 
 .vpc-vote-button:hover {
-    background-color: #dc3545;
-    color: #fff;
+    background-color: var(--accent-hover-color);
 }
 
 .vpc-voted {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: #dc3545;
+    background-color: #28a745;
     color: white;
-    border-radius: 20px;
-    padding: 5px 15px;
+    border-radius: var(--btn-radius);
+    padding: 8px 16px;
     font-size: 14px;
 }
 
 .vpc-heart {
     font-size: 18px;
-    margin-right: 5px;
+    margin-right: 6px;
 }
 
 .vpc-voted-heart {
@@ -53,18 +260,199 @@
 
 .vpc-contest-info {
     font-size: 12px;
-    color: #6c757d;
-    margin-top: 5px;
+    color: var(--secondary-text-color);
+    margin-top: 8px;
 }
 
 .vpc-votes-left,
 .vpc-votes-limit-reached {
     font-size: 12px;
-    color: #6c757d;
-    margin-top: 5px;
+    color: var(--secondary-text-color);
+    margin-top: 8px;
     font-style: italic;
 }
 
 .vpc-votes-limit-reached {
     color: #dc3545;
+}
+
+/* For Voxel Integration */
+.ts-preview-card .vpc-vote-container {
+    margin: 10px 0;
+}
+
+.ts-preview-card .vpc-vote-button,
+.ts-preview-card .vpc-voted {
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+.ts-preview-card .vpc-heart {
+    font-size: 14px;
+}
+
+/* Submission Form */
+.vpc-submission-form {
+    background-color: var(--main-bg-color);
+    border: 1px solid var(--main-border-color);
+    border-radius: var(--card-radius);
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: var(--card-shadow);
+}
+
+.vpc-submission-form h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: var(--main-text-color);
+}
+
+.vpc-form-field {
+    margin-bottom: 20px;
+}
+
+.vpc-form-field label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: var(--main-text-color);
+}
+
+.vpc-form-field input[type="text"],
+.vpc-form-field textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--main-border-color);
+    border-radius: var(--btn-radius);
+    background-color: var(--main-bg-color);
+    color: var(--main-text-color);
+}
+
+.vpc-form-field input[type="file"] {
+    display: block;
+    margin-top: 5px;
+}
+
+.vpc-form-submit {
+    background-color: var(--primary-btn-color);
+    color: var(--primary-btn-text-color);
+    border: none;
+    border-radius: var(--btn-radius);
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.vpc-form-submit:hover {
+    background-color: var(--accent-hover-color);
+}
+
+/* Leaderboard */
+.vpc-leaderboard {
+    background-color: var(--main-bg-color);
+    border: 1px solid var(--main-border-color);
+    border-radius: var(--card-radius);
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: var(--card-shadow);
+}
+
+.vpc-leaderboard h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: var(--main-text-color);
+}
+
+.vpc-leaderboard-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.vpc-leaderboard-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid var(--main-border-color);
+}
+
+.vpc-leaderboard-item:last-child {
+    border-bottom: none;
+}
+
+.vpc-leaderboard-rank {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--secondary-text-color);
+    width: 40px;
+    text-align: center;
+}
+
+.vpc-leaderboard-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-right: 15px;
+}
+
+.vpc-leaderboard-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.vpc-leaderboard-content {
+    flex: 1;
+}
+
+.vpc-leaderboard-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--main-text-color);
+    margin: 0 0 5px 0;
+}
+
+.vpc-leaderboard-author {
+    font-size: 14px;
+    color: var(--secondary-text-color);
+}
+
+.vpc-leaderboard-votes {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-left: 15px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .vpc-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    
+    .vpc-contest-stats {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .vpc-contest-stat {
+        min-width: 100%;
+    }
+    
+    .vpc-leaderboard-item {
+        flex-wrap: wrap;
+    }
+    
+    .vpc-leaderboard-image {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    .vpc-gallery {
+        grid-template-columns: 1fr;
+    }
 }

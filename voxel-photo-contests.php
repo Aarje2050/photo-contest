@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Create namespace for our plugin classes
-namespace VPC {
+
     // Base placeholder classes to avoid errors before we create the actual files
     class Voting_System {
         private static $instance = null;

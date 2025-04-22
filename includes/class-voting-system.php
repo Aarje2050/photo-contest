@@ -10,7 +10,8 @@ if (!defined('ABSPATH')) {
  * 
  * Handles all voting-related functionality
  */
-class Voting_System {
+if (!class_exists('VPC\Voting_System')) {
+ class Voting_System {
     
     private static $instance = null;
     
@@ -673,4 +674,5 @@ class Voting_System {
             $contest_id
         ));
     }
+}
 }

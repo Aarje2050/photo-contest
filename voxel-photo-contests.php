@@ -6,7 +6,7 @@
  * Author: Your Name
  * Text Domain: voxel-photo-contests
  */
-
+namespace VPC ;
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
@@ -57,7 +57,7 @@ namespace VPC {
         public function render_submission_form($atts) { return ''; }
         public function render_gallery($atts) { return ''; }
     }
-}
+
 
 // Initialize the plugin
 function vpc_init() {

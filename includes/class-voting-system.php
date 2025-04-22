@@ -59,7 +59,7 @@ class Voting_System {
             id bigint(20) NOT NULL AUTO_INCREMENT,
             post_id bigint(20) NOT NULL,
             contest_id bigint(20) NOT NULL DEFAULT 0,
-            user_id bigint(20) NOT NULL DEFAULT 0,
+            user_id varchar(100) NOT NULL,
             vote_value int(11) NOT NULL DEFAULT 1,
             vote_date datetime DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (id),
@@ -69,6 +69,22 @@ class Voting_System {
         
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
+        
+        // Check if the table was created correctly
+        if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
+            error_log('Failed to create table: ' . $table_name);
+        }
+        
+        // Check if the contest_id column exists, add it if it doesn't
+        $columns = $wpdb->get_results("DESCRIBE $table_name");
+        $column_names = array_map(function($column) {
+            return $column->Field;
+        }, $columns);
+        
+        if (!in_array('contest_id', $column_names)) {
+            $wpdb->query("ALTER TABLE $table_name ADD COLUMN contest_id bigint(20) NOT NULL DEFAULT 0 AFTER post_id");
+            error_log('Added contest_id column to ' . $table_name);
+        }
     }
     
     /**
@@ -93,7 +109,7 @@ class Voting_System {
         }
         
         // Process vote
-        $result = $this->process_vote($post_id, $user_id);
+        $result = $this->process_vote($post_id, 'user_' . $user_id);
         
         if (is_wp_error($result)) {
             wp_send_json_error(['message' => $result->get_error_message()]);
@@ -207,13 +223,13 @@ class Voting_System {
         global $wpdb;
         $table_name = $wpdb->prefix . 'vpc_votes';
         
-        // Convert user_id to string for compatibility with IP-based IDs
-        $user_id_value = is_numeric($user_id) ? intval($user_id) : $user_id;
+        // Check if table exists and has required columns
+        $this->ensure_table_exists();
         
         // Check if user has already voted for this post
         $existing_vote = $wpdb->get_var($wpdb->prepare(
             "SELECT id FROM $table_name WHERE post_id = %d AND user_id = %s",
-            $post_id, $user_id_value
+            $post_id, $user_id
         ));
         
         if ($existing_vote) {
@@ -223,7 +239,7 @@ class Voting_System {
         // Count how many votes this user has made in the contest
         $vote_count = $wpdb->get_var($wpdb->prepare(
             "SELECT COUNT(*) FROM $table_name WHERE contest_id = %d AND user_id = %s",
-            $contest_id, $user_id_value
+            $contest_id, $user_id
         ));
         
         // Check if user has reached max votes
@@ -241,7 +257,7 @@ class Voting_System {
                 [
                     'post_id' => $post_id,
                     'contest_id' => $contest_id,
-                    'user_id' => $user_id_value,
+                    'user_id' => $user_id,
                     'vote_value' => 1,
                     'vote_date' => current_time('mysql')
                 ],
@@ -249,7 +265,9 @@ class Voting_System {
             );
             
             if ($result === false) {
-                return new \WP_Error('db_error', __('Error recording vote', 'voxel-photo-contests'));
+                $wpdb_error = $wpdb->last_error;
+                error_log('Error recording vote: ' . $wpdb_error);
+                return new \WP_Error('db_error', __('Error recording vote', 'voxel-photo-contests') . ': ' . $wpdb_error);
             }
             
             // Get updated vote count for this post
@@ -267,7 +285,33 @@ class Voting_System {
             ];
             
         } catch (\Exception $e) {
+            error_log('Exception recording vote: ' . $e->getMessage());
             return new \WP_Error('exception', $e->getMessage());
+        }
+    }
+    
+    /**
+     * Ensure the votes table exists and has the correct structure
+     */
+    private function ensure_table_exists() {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'vpc_votes';
+        
+        // Check if the table exists
+        if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
+            $this->create_tables();
+            return;
+        }
+        
+        // Check if the contest_id column exists
+        $columns = $wpdb->get_results("DESCRIBE $table_name");
+        $column_names = array_map(function($column) {
+            return $column->Field;
+        }, $columns);
+        
+        if (!in_array('contest_id', $column_names)) {
+            $wpdb->query("ALTER TABLE $table_name ADD COLUMN contest_id bigint(20) NOT NULL DEFAULT 0 AFTER post_id");
+            error_log('Added contest_id column to ' . $table_name);
         }
     }
     
@@ -310,7 +354,7 @@ class Voting_System {
             }
         }
         
-        // Fallback to regular post meta if needed
+        // Fallback to regular post meta
         if (!$contest_id) {
             $contest_id = get_post_meta($post_id, 'vpc_contest_id', true);
         }
@@ -324,6 +368,9 @@ class Voting_System {
             return '';
         }
         
+        // Ensure the votes table exists
+        $this->ensure_table_exists();
+        
         // Get contest dates
         $contest_dates = $this->get_contest_dates($contest_id);
         $contest_not_started = $contest_dates['start'] && time() < $contest_dates['start'];
@@ -334,7 +381,7 @@ class Voting_System {
         
         // Get current user or IP
         $is_guest = !is_user_logged_in();
-        $user_id = $is_guest ? 'ip_' . md5($_SERVER['REMOTE_ADDR']) : get_current_user_id();
+        $user_id = $is_guest ? 'ip_' . md5($_SERVER['REMOTE_ADDR']) : 'user_' . get_current_user_id();
         
         // Check if guest voting is allowed
         $allow_guest_voting = get_option('vpc_allow_guest_voting', 'no');
@@ -527,7 +574,7 @@ class Voting_System {
      */
     public function add_vote_count_to_post_data($data, $post) {
         // Only process submission post types
-        if ($post->post_type->get_key() !== 'submission') {
+        if (!$post || $post->post_type->get_key() !== 'submission') {
             return $data;
         }
         
@@ -602,6 +649,9 @@ class Voting_System {
         global $wpdb;
         $table_name = $wpdb->prefix . 'vpc_votes';
         
+        // Make sure the table exists
+        $this->ensure_table_exists();
+        
         return (int) $wpdb->get_var($wpdb->prepare(
             "SELECT COUNT(*) FROM $table_name WHERE contest_id = %d",
             $contest_id
@@ -614,6 +664,9 @@ class Voting_System {
     public function get_unique_voters_count($contest_id) {
         global $wpdb;
         $table_name = $wpdb->prefix . 'vpc_votes';
+        
+        // Make sure the table exists
+        $this->ensure_table_exists();
         
         return (int) $wpdb->get_var($wpdb->prepare(
             "SELECT COUNT(DISTINCT user_id) FROM $table_name WHERE contest_id = %d",
